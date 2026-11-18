@@ -1,0 +1,19 @@
+<group name="local,sysmon,ournew_lab,">
+
+  <!-- Rule 100510: suspicious hex-named executable created in Temp (Sysmon ID 11) -->
+  <rule id="100510" level="15">
+    <if_sid>92213</if_sid>
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i)Temp.*[0-9a-f]{16}\.exe$</field>
+    <description>LAB - Suspicious hexadecimal executable dropped in Temp</description>
+    <group>malware_suspicious_drop,</group>
+  </rule>
+
+  <!-- Rule 100511: suspicious hex-named executable launched from Temp (Sysmon ID 1) -->
+  <rule id="100511" level="13">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)Temp.*[0-9a-f]{16}\.exe$</field>
+    <description>LAB - Suspicious executable executed from Temp</description>
+    <group>malware_suspicious_execution,</group>
+  </rule>
+
+</group>
